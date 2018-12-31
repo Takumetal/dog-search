@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Dog Search</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.bundle.min.js" integrity="sha384-pjaaA8dDz/5BgdFUPX6M/9SUZv4d12SUPF0axWc+VRZkx5xU3daN+lYb49+Ax+Tl"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+        crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <h1>Dog Search.</h1>
+                <div class="offset-sm-4 col-sm-4" id="search-area">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Type dog name" name="dog">
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block" name="search">Search</button>
+                    </form>
+                </div>
+                <hr>
+                {% if request.POST %}
+                    <h2>Search results...</h2>
+                    <hr>
+                    {% if results %}
+                        {% for result in results %}
+                            <div class="row results-row">
+                            {% for value in result %}
+                                <div class="col-sm-3 results">
+                                    <img class="img-fluid img-thumbnail rounded" src="{{ value }}">
+                                </div>
+                            {% endfor %}
+                            </div>
+                        {% endfor %}
+                        {% else %}
+                        <h3>Not found!</h3>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+<style>
+    body {
+        margin: 0 auto;
+    }
+    .row {
+        text-align: center;
+    }
+    h1 {
+        margin-bottom: 3%;
+        margin-top: 3%;
+    }
+    #search-area, .results-row {
+        margin-bottom: 3%;
+    }
+</style>
+</html>
